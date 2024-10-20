@@ -55,6 +55,9 @@ export interface MyInputProps {
   leftchild?: React.ReactNode;
   keyboardType?: KeyboardTypeOptions;
   editable?: boolean;
+  email?: boolean;
+  lock?: boolean;
+  value?: string;
   onBlur?:
     | ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void)
     | undefined;

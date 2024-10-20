@@ -7,9 +7,11 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { EyeClosed } from "../../assets";
+// import { EyeClosed } from "../../assets";
 import { useTheme } from "@react-navigation/native";
 import MyText from "../MyText";
+import { Email, EyeClosed, EyeOpened, Lock } from "../../assets";
+import { LightTheme } from "../../theme";
 
 function MyInput({
   label,
@@ -21,10 +23,12 @@ function MyInput({
   style,
   inputStyle,
   placeholderColor,
+  email,
   width,
+  lock,
+  value,
 }: MyInputProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const theme = useTheme();
   return (
     <View style={[styles({ width }).container, style]}>
       {label && (
@@ -36,21 +40,41 @@ function MyInput({
         </MyText>
       )}
       <View style={styles({}).inputContainer}>
+        {email && (
+          <Email
+            // color={LightTheme.colors.primary}
+            width={25}
+            height={25}
+            style={{ marginRight: 10 }}
+          />
+        )}
+        {lock && (
+          <Lock
+            // color={LightTheme.colors.primary}
+            width={25}
+            height={25}
+            style={{ marginRight: 10 }}
+          />
+        )}
         <TextInput
           multiline={multiline}
           secureTextEntry={password ? (showPassword ? false : true) : false}
           placeholder={placeholder}
           placeholderTextColor={placeholderColor ? placeholderColor : "#888888"}
-          value={text!}
+          value={value}
           onChangeText={(val): void => onChange?.(val)}
           style={[inputStyle, styles({ width, password }).InputStyle]}
         />
         {password && (
           <Pressable
             onPress={() => setShowPassword(!showPassword)}
-            style={{ marginLeft: -20 }}
+            style={{ marginLeft: -25 }}
           >
-            {showPassword ? <EyeClosed /> : <EyeClosed />}
+            {showPassword ? (
+              <EyeClosed width={25} height={25} />
+            ) : (
+              <EyeOpened width={25} height={25} />
+            )}
           </Pressable>
         )}
       </View>
@@ -80,6 +104,7 @@ const styles = ({
     },
     InputStyle: {
       fontFamily: "Inter-Regular",
+      color: "white",
       width: password ? "90%" : "100%",
     },
   });

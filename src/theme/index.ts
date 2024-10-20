@@ -14,6 +14,7 @@ const colors = {
     focused: "#0E7A9E",
     positive: "#ffffff",
     negative: "#000000",
+    header: "#12273c",
   },
   dark: {
     primary: "#49ACE1",

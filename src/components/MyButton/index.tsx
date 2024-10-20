@@ -10,6 +10,7 @@ import Feather from "@expo/vector-icons/Feather";
 
 import { MyButtonProps } from "../../types";
 import MyText from "../MyText";
+import { LightTheme } from "../../theme";
 
 function MyButton({
   label,
@@ -21,9 +22,9 @@ function MyButton({
   chevron,
   disabled,
 }: MyButtonProps) {
-  const theme = useTheme();
+  // const theme = useTheme();
   const buttonStyle: ViewStyle = {
-    backgroundColor: backgroundColor || theme.colors.primary,
+    backgroundColor: backgroundColor || LightTheme.colors.text,
     flexDirection: "row",
     borderRadius: 20,
     alignItems: "center",
@@ -34,8 +35,9 @@ function MyButton({
   };
 
   const buttonTextStyle: TextStyle = {
-    color: textColor || "white",
+    color: textColor || LightTheme.colors.primary,
     fontWeight: "600",
+    fontFamily: "Inter-Bold",
     fontSize: 14,
     textAlign: "center",
     width: "100%",
