@@ -81,9 +81,58 @@ export type categoryProps = {
 };
 
 export type MyBannerProps = {
-  background: ImageSourcePropType;
-  title1: string;
+  background?: ImageSourcePropType;
   title2?: string;
   touchable?: boolean;
+  label?: string;
+  height?: number;
+  width?: number;
+  source?: ImageSourcePropType; // Correct type for the image source
+  require?: ImageSourcePropType;
+  title?: string;
+  style?: ViewStyle;
   onPress?: () => void;
 };
+
+export interface RootObject {
+  audiobooks: Audiobooks;
+  "fictional-stories": Fictionalstories;
+}
+
+export interface Fictionalstories {
+  "Blood Romance": BloodRomance;
+  DCosta: BloodRomance;
+  Haunted: BloodRomance;
+  "Jo Bache Hain Sang Samet Lo": BloodRomance;
+  Piyas: BloodRomance;
+  "Teri Berukhi Ke Dayar Me": BloodRomance;
+}
+
+export interface BloodRomance {
+  episodes: Episode[];
+  featureImage: string;
+  genre: string;
+  title: string;
+}
+
+export interface Episode {
+  audioUrl: string;
+  title: string;
+}
+
+export interface Audiobooks {
+  "Eat That Frog": EatThatFrog;
+  "Peer-e-Kamil": EatThatFrog;
+  "The Adventures of Sherlock Holmes": EatThatFrog;
+  "The Girl On The Train": EatThatFrog;
+  "The Hounds Of Baskervilles ": EatThatFrog;
+  "The Poor Traveller": EatThatFrog;
+}
+
+export interface EatThatFrog {
+  audioUrl: string;
+  category: string;
+  featureImage: string;
+  genre: string;
+  title: string;
+}
