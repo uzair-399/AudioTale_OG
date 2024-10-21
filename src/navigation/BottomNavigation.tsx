@@ -1,9 +1,16 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AudioBooks, Home, Stories } from "../screens";
-import { HomeTab, AudioBooksTab, StoriesTab } from "../assets";
+import {
+  HomeTab,
+  AudioBooksTab,
+  StoriesTab,
+  Exit,
+  Search,
+  Filter,
+} from "../assets";
 import { LightTheme } from "../theme";
 
 const BottomTab = createBottomTabNavigator();
@@ -67,13 +74,25 @@ const BottomNavigation = () => {
 
   return (
     <BottomTab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: true,
+      screenOptions={({ route, navigation }) => ({
         headerStyle: {
           backgroundColor: LightTheme.colors.background, // Set the header background to blue
         },
+
+        headerRight: () => (
+          <View style={{ flexDirection: "row" }}>
+            <Pressable style={{ marginRight: 15 }}>
+              <Search height={25} width={25} />
+            </Pressable>
+            <Pressable style={{ marginRight: 15 }}>
+              <Filter width={25} height={25} />
+            </Pressable>
+          </View>
+        ),
         headerTitleAlign: "center", // Center the header title
         headerTintColor: LightTheme.colors.text, // Optional: make the title and icons white
+        tabBarActiveTintColor: "#0F5D9F", // Active tab color set to blue
+        tabBarLabelStyle: { bottom: 10 },
         tabBarIcon: ({ focused }) => {
           return tabBar(route.name, focused);
         },
@@ -81,9 +100,6 @@ const BottomNavigation = () => {
           height: 60,
           backgroundColor: LightTheme.colors.background,
         },
-        tabBarActiveTintColor: "#0F5D9F", // Active tab color set to blue
-        tabBarInactiveTintColor: "#49ACE1", // Inactive tab color set to a lighter blue
-        tabBarLabelStyle: { bottom: 10 },
       })}
     >
       <BottomTab.Screen

@@ -46,7 +46,10 @@ const SignIn = ({ navigation }) => {
           <View style={styles.formContainer}>
             <MyInput
               email
-              style={styles.input}
+              style={[
+                styles.input,
+                touched.email && errors.email ? styles.errorInput : null,
+              ]}
               placeholder="Email"
               onChange={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -59,21 +62,17 @@ const SignIn = ({ navigation }) => {
             <GapView length={20} />
             <MyInput
               lock
-              style={styles.input}
+              style={[
+                styles.input,
+                touched.password && errors.password ? styles.errorInput : null,
+              ]}
               placeholder="Password"
               onChange={handleChange("password")}
               onBlur={handleBlur("password")}
               value={values.password}
               password
             />
-            {touched.password && errors.password && (
-              <Text style={styles.errorText}>{errors.password}</Text>
-            )}
 
-            <GapView length={20} />
-            <MyText style={{ color: LightTheme.colors.primary }}>
-              Forgot Password ?
-            </MyText>
             <GapView length={30} />
             <View style={{ width: "50%", alignItems: "center" }}>
               <MyButton onPress={handleSubmit} label="Sign Up" />

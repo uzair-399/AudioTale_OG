@@ -20,7 +20,7 @@ const SignIn = ({ navigation }) => {
       validationSchema={validationSchema}
       onSubmit={(values) => {
         console.log(values);
-        navigation.navigate("BottomTab");
+        navigation.replace("BottomTab");
         // Add your form submission logic here (e.g., API calls)
       }}
     >

@@ -5,3 +5,7 @@ export { default as EyeOpened } from "./vectors/eye-open.svg";
 export { default as EyeClosed } from "./vectors/eye-close.svg";
 export { default as Email } from "./vectors/email.svg";
 export { default as Lock } from "./vectors/lock.svg";
+export { default as Menu } from "./vectors/menu.svg";
+export { default as Exit } from "./vectors/exit.svg";
+export { default as Filter } from "./vectors/filter.svg";
+export { default as Search } from "./vectors/search.svg";
