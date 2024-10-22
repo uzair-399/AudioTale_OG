@@ -91,6 +91,7 @@ export type MyBannerProps = {
   require?: ImageSourcePropType;
   title?: string;
   style?: ViewStyle;
+  genre?: string;
   onPress?: () => void;
 };
 

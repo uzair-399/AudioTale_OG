@@ -15,6 +15,7 @@ const colors = {
     positive: "#ffffff",
     negative: "#000000",
     header: "#12273c",
+    genre: "#ad1616",
   },
   dark: {
     primary: "#49ACE1",
