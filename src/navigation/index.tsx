@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SignIn, SignUp } from "../screens";
+import { Music, SignIn, SignUp } from "../screens";
 import { LightTheme } from "../theme";
 
 import BottomNavigation from "./BottomNavigation";
@@ -30,6 +30,7 @@ const RootNav = () => {
       >
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Music" component={Music} />
         <Stack.Screen
           name="BottomTab"
           component={BottomNavigation}

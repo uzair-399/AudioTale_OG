@@ -18,15 +18,13 @@ type Story = {
   episodes: Episode[];
 };
 
-const Stories = () => {
+const Stories = ({ navigation }) => {
   const [expandedStory, setExpandedStory] = useState<string | null>(null);
 
-  // Type the handler to ensure storyTitle is a string
   const epiPressHandler = (storyTitle: string) => {
     setExpandedStory(expandedStory === storyTitle ? null : storyTitle);
   };
 
-  // Map DummyData to ensure typing
   const fictionalStories: Story[] = DummyData.fictionalStories.map(
     (fictionalStory: Story) => ({
       title: fictionalStory.title,
@@ -36,7 +34,6 @@ const Stories = () => {
     })
   );
 
-  // Render function with proper typing
   const fictionalStoriesRender = ({ item }: { item: Story }) => {
     return (
       <>
@@ -44,7 +41,7 @@ const Stories = () => {
           <MyBanner
             title2={item.title}
             genre={item.genre}
-            source={{ uri: item.featureImage }} // Load the image from the URL
+            source={{ uri: item.featureImage }}
             width={300}
             height={250}
             style={{ marginVertical: 10 }}
@@ -63,9 +60,21 @@ const Stories = () => {
         {expandedStory === item.title && (
           <View style={styles.episodeContainer}>
             {item.episodes.map((episode, index) => (
-              <View key={index} style={styles.episodeItem}>
-                <Text style={styles.episodeText}>{episode.title}</Text>
-              </View>
+              <Pressable
+                key={index}
+                onPress={() =>
+                  navigation.navigate("Music", {
+                    title: episode.title,
+                    genre: item.genre,
+                    audioUrl: episode.audioUrl, // Pass the episode's audioUrl
+                    featureImage: item.featureImage,
+                  })
+                }
+              >
+                <View style={styles.episodeItem}>
+                  <Text style={styles.episodeText}>{episode.title}</Text>
+                </View>
+              </Pressable>
             ))}
           </View>
         )}

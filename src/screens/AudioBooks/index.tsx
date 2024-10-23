@@ -4,7 +4,7 @@ import { LightTheme } from "../../theme";
 import { DummyData } from "../../constants/DummyData";
 import { GapView, MyBanner } from "../../components";
 
-const AudioBooks = () => {
+const AudioBooks = ({ navigation }) => {
   const audioBooks = DummyData.audiobooks.map((audioBook) => {
     return {
       title: audioBook.title,
@@ -22,6 +22,14 @@ const AudioBooks = () => {
         width={340}
         height={250}
         style={{ marginVertical: 10 }}
+        onPress={() =>
+          navigation.navigate("Music", {
+            title: item.title,
+            genre: item.genre,
+            audioUrl: item.audioUrl,
+            featureImage: item.featureImage,
+          })
+        }
       />
     );
   };

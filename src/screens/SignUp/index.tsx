@@ -4,16 +4,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { GapView, MyButton, MyInput, MyText } from "../../components";
 import { LightTheme } from "../../theme";
-import {
-  RootStackParamsList,
-  D1ParamsList,
-} from "../../types/navigationParams";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
-type SignInProps = NativeStackScreenProps<
-  RootStackParamsList & D1ParamsList,
-  "SignIn"
->;
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -23,7 +13,7 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const SignIn: React.FC<SignInProps> = ({ navigation }) => {
+const SignIn = ({ navigation }) => {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
