@@ -9,3 +9,7 @@ export { default as Menu } from "./vectors/menu.svg";
 export { default as Exit } from "./vectors/exit.svg";
 export { default as Filter } from "./vectors/filter.svg";
 export { default as Search } from "./vectors/search.svg";
+export { default as CloseDropDown } from "./vectors/closedropdown.svg";
+export { default as OpenDropDown } from "./vectors/opendropdown.svg";
+export { default as Play } from "./vectors/play.svg";
+export { default as Pause } from "./vectors/pause.svg";

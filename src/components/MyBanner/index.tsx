@@ -9,20 +9,21 @@ import React from "react";
 import { LightTheme } from "../../theme";
 import MyText from "../MyText";
 import { MyBannerProps } from "../../types";
+import { Link } from "@react-navigation/native";
 
 const MyBanner = ({
-  label,
   height,
   width,
   source,
   title,
   title2,
   style,
+  genre,
   onPress,
 }: MyBannerProps) => {
   return (
     <View style={[styles.container, style]}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {/* {label && <Text style={styles.label}>{label}</Text>} */}
       <View style={[styles.shadowBox, { height, width }]}>
         <Pressable onPress={onPress} style={styles.pressable}>
           <ImageBackground
@@ -41,6 +42,11 @@ const MyBanner = ({
               >
                 {title2}
               </MyText>
+              {genre && (
+                <MyText style={styles.genre} numberOfLines={1}>
+                  {genre}
+                </MyText>
+              )}
             </View>
           )}
         </Pressable>
@@ -57,13 +63,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: LightTheme.colors.background,
   },
-  label: {
-    color: LightTheme.colors.text,
-    fontSize: 24,
-    fontWeight: "700",
-    margin: 10,
-    marginBottom: 15,
-  },
+  // label: {
+  //   color: LightTheme.colors.text,
+  //   fontSize: 24,
+  //   fontWeight: "700",
+  //   margin: 10,
+  //   marginBottom: 15,
+  // },
   shadowBox: {
     borderRadius: 15,
     justifyContent: "center",
@@ -108,8 +114,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: "100%", // Make the background full-width
     backgroundColor: "#0E7A9E", // Blue background
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
+    flexDirection: "row",
     paddingVertical: 8,
+  },
+  genre: {
+    color: LightTheme.colors.genre,
+    fontSize: 14,
+    fontWeight: "900",
+    textAlign: "center",
+    marginTop: 5,
+    paddingHorizontal: 5,
   },
 });

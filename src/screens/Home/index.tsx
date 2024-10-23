@@ -1,9 +1,66 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  FlatList,
+  Text,
+  Pressable,
+} from "react-native";
 import React from "react";
 import { GapView, MyBanner, MyText } from "../../components";
 import { LightTheme } from "../../theme"; // Import the theme for colors
+import { DummyData } from "../../constants/DummyData";
 
-const Home = () => {
+const Home = ({ navigation }) => {
+  const mysteryCat = DummyData.audiobooks.filter(
+    (audio) => audio.genre === "Mystery"
+  );
+  const horrorCat = DummyData.fictionalStories.filter(
+    (audio) => audio.genre === "Horror"
+  );
+  const renderMysteryBanner = ({ item }) => {
+    // console.log("this is item :", item);
+    return (
+      <MyBanner
+        title2={item.title} // Display the title of the audiobook
+        source={{ uri: item.featureImage }} // Load the image from the URL
+        height={220}
+        width={160}
+        style={{ marginHorizontal: 10 }}
+        onPress={() =>
+          navigation.navigate("Music", {
+            title: item.title,
+            genre: item.genre,
+            audioUrl: item.audioUrl,
+            featureImage: item.featureImage,
+          })
+        }
+      />
+    );
+  };
+  const renderHorrorBanner = ({ item }) => {
+    // console.log("this is horror item :", item);
+    return (
+      <MyBanner
+        title2={item.title} // Display the title of the audiobook
+        source={{ uri: item.featureImage }} // Load the image from the URL
+        height={220}
+        width={160}
+        style={{ marginHorizontal: 10 }}
+        onPress={() =>
+          navigation.navigate("Music", {
+            title: item.title,
+            genre: item.genre,
+            audioUrl: item.audioUrl,
+            featureImage: item.featureImage,
+          })
+        }
+      />
+    );
+  };
+
+  // console.log("This is whole mystery: ", mysteryCat);
+  // console.log("This is whole Horror category: ", horrorCat);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -21,15 +78,19 @@ const Home = () => {
             width={170}
             title="AudioBooks"
             source={require("./../../assets/Classic.jpg")}
+            onPress={() => navigation.navigate("AudioBooks")}
           />
+
           <MyBanner
             height={280}
             width={170}
             title="Community Creation"
             source={require("./../../assets/CommunityCreations.jpg")}
+            onPress={() => navigation.navigate("Stories")}
           />
         </View>
         <GapView length={20} />
+
         <MyText
           size={26}
           textColor={LightTheme.colors.text}
@@ -39,33 +100,14 @@ const Home = () => {
           Classic Mysteries
         </MyText>
         <View style={styles.horizontalContainer}>
-          <ScrollView
+          <FlatList
+            data={mysteryCat} // Data from the filtered Mystery category
+            renderItem={renderMysteryBanner} // Function to render each item
+            keyExtractor={(item) => item.title} // Unique key for each item
             horizontal // Enable horizontal scrolling
+            showsHorizontalScrollIndicator={false} // Hide the horizontal scroll indicator
             contentContainerStyle={styles.horizontalScrollView}
-            showsHorizontalScrollIndicator={false} // Optional: hide the scroll bar
-          >
-            <MyBanner
-              source={require("./../../assets/CommunityCreations.jpg")}
-              title2="The Girl On The Train"
-              height={220}
-              width={150}
-              style={{ marginHorizontal: 10 }}
-            />
-            <MyBanner
-              source={require("./../../assets/CommunityCreations.jpg")}
-              height={220}
-              title2="Adventures of Sherlock Holmes"
-              width={150}
-              style={{ marginHorizontal: 10 }}
-            />
-            <MyBanner
-              source={require("./../../assets/CommunityCreations.jpg")}
-              height={220}
-              width={150}
-              title2="The Hounds of Baskervilles"
-              style={{ marginHorizontal: 10 }}
-            />
-          </ScrollView>
+          />
         </View>
         <GapView length={20} />
         <MyText
@@ -77,33 +119,14 @@ const Home = () => {
           Horror Tales
         </MyText>
         <View style={styles.horizontalContainer}>
-          <ScrollView
+          <FlatList
+            data={horrorCat} // Data from the filtered Mystery category
+            renderItem={renderHorrorBanner} // Function to render each item
+            keyExtractor={(item) => item.title} // Unique key for each item
             horizontal // Enable horizontal scrolling
+            showsHorizontalScrollIndicator={false} // Hide the horizontal scroll indicator
             contentContainerStyle={styles.horizontalScrollView}
-            showsHorizontalScrollIndicator={false} // Optional: hide the scroll bar
-          >
-            <MyBanner
-              source={require("./../../assets/CommunityCreations.jpg")}
-              title2="The Girl On The Train"
-              height={220}
-              width={150}
-              style={{ marginHorizontal: 10 }}
-            />
-            <MyBanner
-              source={require("./../../assets/CommunityCreations.jpg")}
-              height={220}
-              title2="Adventures of Sherlock Holmes"
-              width={150}
-              style={{ marginHorizontal: 10 }}
-            />
-            <MyBanner
-              source={require("./../../assets/CommunityCreations.jpg")}
-              height={220}
-              width={150}
-              title2="The Hounds of Baskervilles"
-              style={{ marginHorizontal: 10 }}
-            />
-          </ScrollView>
+          />
         </View>
         <GapView length={40} />
       </ScrollView>
@@ -125,12 +148,15 @@ const styles = StyleSheet.create({
   mainBannerContainer: {
     flexDirection: "row",
   },
+  mainBannerPressableContainer: {
+    margin: 10,
+  },
   horizontalContainer: {
     flexDirection: "row",
     // height: 250, // Set a height for the horizontal container to prevent clipping
   },
   horizontalScrollView: {
     flexDirection: "row",
-    alignItems: "center", // Optional: centers the items vertically
+    // alignItems: "center", // Optional: centers the items vertically
   },
 });

@@ -4,10 +4,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { GapView, MyButton, MyInput, MyText } from "../../components";
 import { LightTheme } from "../../theme";
-import {
-  RootStackParamsList,
-  D1ParamsList,
-} from "../../types/navigationParams";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
