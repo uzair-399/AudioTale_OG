@@ -39,6 +39,7 @@ const Stories = ({ navigation }) => {
       <>
         <View style={styles.storyContainer}>
           <MyBanner
+            onPress={() => epiPressHandler(item.title)}
             title2={item.title}
             genre={item.genre}
             source={{ uri: item.featureImage }}
