@@ -64,14 +64,7 @@ const Home = ({ navigation }) => {
         height={220}
         width={160}
         style={{ marginHorizontal: 10 }}
-        onPress={() =>
-          navigation.navigate("Music", {
-            title: item.title,
-            genre: item.genre,
-            audioUrl: item.audioUrl,
-            featureImage: item.featureImage,
-          })
-        }
+        onPress={() => navigation.navigate("Stories")}
       />
     );
   };

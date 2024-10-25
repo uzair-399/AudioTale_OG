@@ -5,3 +5,4 @@ export { default as MyButton } from "./MyButton";
 export { default as GapView } from "./GapView";
 export { default as MyView } from "./MyView";
 export { default as MyBanner } from "./MyBanner";
+export { default as MySearch } from "./MySearch";
