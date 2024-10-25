@@ -1,23 +1,40 @@
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  Text,
-  Pressable,
-} from "react-native";
-import React from "react";
+import { View, ScrollView, StyleSheet, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
 import { GapView, MyBanner, MyText } from "../../components";
 import { LightTheme } from "../../theme"; // Import the theme for colors
-import { DummyData } from "../../constants/DummyData";
+import { db } from "../../../firebaseconfig";
+import { ref, onValue } from "firebase/database";
 
 const Home = ({ navigation }) => {
-  const mysteryCat = DummyData.audiobooks.filter(
-    (audio) => audio.genre === "Mystery"
-  );
-  const horrorCat = DummyData.fictionalStories.filter(
+  const [audiobooks, setAudiobooks] = useState([]);
+  const [fictionalStories, setFictionalStories] = useState([]);
+
+  useEffect(() => {
+    // Fetch audiobooks data
+    const audiobooksRef = ref(db, "/audiobooks");
+    onValue(audiobooksRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setAudiobooks(Object.values(data));
+      }
+    });
+
+    // Fetch fictional stories data
+    const fictionalStoriesRef = ref(db, "/fictional-stories");
+    onValue(fictionalStoriesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setFictionalStories(Object.values(data));
+      }
+    });
+  }, []);
+
+  // Apply genre filter to fetched data
+  const mysteryCat = audiobooks.filter((audio) => audio.genre === "Mystery");
+  const horrorCat = fictionalStories.filter(
     (audio) => audio.genre === "Horror"
   );
+
   const renderMysteryBanner = ({ item }) => {
     // console.log("this is item :", item);
     return (

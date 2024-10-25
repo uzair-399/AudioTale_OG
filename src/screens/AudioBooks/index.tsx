@@ -1,11 +1,26 @@
 import { View, StyleSheet, Text, FlatList } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { LightTheme } from "../../theme";
 import { DummyData } from "../../constants/DummyData";
 import { GapView, MyBanner } from "../../components";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../../firebaseconfig";
 
 const AudioBooks = ({ navigation }) => {
-  const audioBooks = DummyData.audiobooks.map((audioBook) => {
+  const [audiobooks, setAudiobooks] = React.useState([]);
+
+  useEffect(() => {
+    // Fetch audiobooks data
+    const audiobooksRef = ref(db, "/audiobooks");
+    onValue(audiobooksRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setAudiobooks(Object.values(data));
+      }
+    });
+  }, []);
+
+  const audioBooks = audiobooks.map((audioBook) => {
     return {
       title: audioBook.title,
       genre: audioBook.genre,

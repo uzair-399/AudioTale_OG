@@ -1,9 +1,11 @@
 import { View, StyleSheet, Text, FlatList, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LightTheme } from "../../theme";
 import { DummyData } from "../../constants/DummyData";
 import { GapView, MyBanner } from "../../components";
 import { CloseDropDown, OpenDropDown } from "../../assets";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../../firebaseconfig";
 
 // Define types for a story and episode
 type Episode = {
@@ -25,7 +27,20 @@ const Stories = ({ navigation }) => {
     setExpandedStory(expandedStory === storyTitle ? null : storyTitle);
   };
 
-  const fictionalStories: Story[] = DummyData.fictionalStories.map(
+  const [fictionalStories, setFictionalStories] = React.useState([]);
+
+  useEffect(() => {
+    // Fetch fictionalStories data
+    const fictionalStoriesRef = ref(db, "/fictional-stories");
+    onValue(fictionalStoriesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setFictionalStories(Object.values(data));
+      }
+    });
+  }, []);
+
+  const fictionalStoriesData: Story[] = fictionalStories.map(
     (fictionalStory: Story) => ({
       title: fictionalStory.title,
       genre: fictionalStory.genre,
@@ -87,7 +102,7 @@ const Stories = ({ navigation }) => {
     <View style={styles.container}>
       <GapView length={10} />
       <FlatList
-        data={fictionalStories}
+        data={fictionalStoriesData}
         renderItem={fictionalStoriesRender}
         keyExtractor={(item) => item.title}
         showsVerticalScrollIndicator={false}
