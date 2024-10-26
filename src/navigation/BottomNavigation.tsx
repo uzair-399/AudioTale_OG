@@ -79,16 +79,23 @@ const BottomNavigation = () => {
           backgroundColor: LightTheme.colors.background, // Set the header background to blue
         },
 
-        // headerRight: () => (
-        //   <View style={{ flexDirection: "row" }}>
-        //     <Pressable style={{ marginRight: 15 }}>
-        //       <Search height={25} width={25} />
-        //     </Pressable>
-        //     <Pressable style={{ marginRight: 15 }}>
-        //       <Filter width={25} height={25} />
-        //     </Pressable>
-        //   </View>
-        // ),
+        headerRight: () => (
+          <View style={{ flexDirection: "row" }}>
+            <Pressable
+              style={{ marginRight: 15 }}
+              onPress={() =>
+                navigation.setParams({
+                  toggleSearch: true,
+                })
+              }
+            >
+              <Search height={25} width={25} />
+            </Pressable>
+            {/* <Pressable style={{ marginRight: 15 }}>
+              <Filter width={25} height={25} />
+            </Pressable> */}
+          </View>
+        ),
         headerTitleAlign: "center", // Center the header title
         headerTintColor: LightTheme.colors.text, // Optional: make the title and icons white
         tabBarActiveTintColor: "#0F5D9F", // Active tab color set to blue

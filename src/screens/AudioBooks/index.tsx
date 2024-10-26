@@ -5,9 +5,10 @@ import { GapView, MyBanner, MyInput } from "../../components";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../../firebaseconfig";
 
-const AudioBooks = ({ navigation }) => {
+const AudioBooks = ({ navigation, route }) => {
   const [audiobooks, setAudiobooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   useEffect(() => {
     // Fetch audiobooks data
@@ -19,6 +20,13 @@ const AudioBooks = ({ navigation }) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (route.params?.toggleSearch) {
+      setShowSearchBar((prev) => !prev);
+      navigation.setParams({ toggleSearch: false }); // Reset toggleSearch to prevent re-trigger
+    }
+  }, [route.params?.toggleSearch]);
 
   const filteredAudiobooks = audiobooks.filter((audioBook) =>
     audioBook.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -45,14 +53,16 @@ const AudioBooks = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <MyInput
-        width={"90%"}
-        style={{ borderWidth: 0 }}
-        placeholder="Search Audiobooks..."
-        value={searchQuery}
-        placeholderColor="white"
-        onChange={(text) => setSearchQuery(text)}
-      />
+      {showSearchBar && (
+        <MyInput
+          width={"90%"}
+          style={{ borderWidth: 0 }}
+          placeholder="Search Audiobooks..."
+          value={searchQuery}
+          placeholderColor="white"
+          onChange={(text) => setSearchQuery(text)}
+        />
+      )}
       <GapView length={10} />
       <FlatList
         data={filteredAudiobooks}

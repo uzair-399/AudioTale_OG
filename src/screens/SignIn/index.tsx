@@ -79,27 +79,31 @@ const SignIn = ({ navigation }) => {
             />
 
             <GapView length={20} />
-            <MyText
-              size={20}
-              weight="900"
-              style={{ color: LightTheme.colors.primary }}
-            >
-              Forgot Password ?
-            </MyText>
+            <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+              <MyText
+                size={20}
+                weight="900"
+                style={{ color: LightTheme.colors.primary }}
+              >
+                Forgot Password ?
+              </MyText>
+            </Pressable>
             <GapView length={30} />
             <View style={{ width: "50%", alignItems: "center" }}>
               <MyButton onPress={handleSubmit} label="SignIn" />
             </View>
             <GapView length={30} />
-            <MyText textColor={LightTheme.colors.text}>
-              Don't have an account?{" "}
-              <Pressable onPress={() => navigation.navigate("SignUp")}>
-                <MyText weight="800" textColor={LightTheme.colors.primary}>
-                  Sign Up{" "}
-                </MyText>
-              </Pressable>
-              Here
-            </MyText>
+            <View style={{ alignItems: "center" }}>
+              <MyText textColor={LightTheme.colors.text}>
+                Don't have an account?{" "}
+                <Pressable onPress={() => navigation.navigate("SignUp")}>
+                  <MyText weight="800" textColor={LightTheme.colors.primary}>
+                    Sign Up{" "}
+                  </MyText>
+                </Pressable>
+                Here
+              </MyText>
+            </View>
           </View>
         </View>
       )}
@@ -112,7 +116,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: LightTheme.colors.background,
     alignItems: "center",
+    justifyContent: "center", // Center contents vertically
   },
+
   imgContainer: {
     margin: 20,
     // flex: 1,

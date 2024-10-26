@@ -26,10 +26,11 @@ type Story = {
   episodes: Episode[];
 };
 
-const Stories = ({ navigation }) => {
+const Stories = ({ navigation, route }) => {
   const [expandedStory, setExpandedStory] = useState<string | null>(null);
   const [fictionalStories, setFictionalStories] = useState<Story[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const epiPressHandler = (storyTitle: string) => {
     setExpandedStory(expandedStory === storyTitle ? null : storyTitle);
@@ -44,6 +45,13 @@ const Stories = ({ navigation }) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (route.params?.toggleSearch) {
+      setShowSearchBar((prev) => !prev);
+      navigation.setParams({ toggleSearch: false }); // Reset toggleSearch to prevent re-trigger
+    }
+  }, [route.params?.toggleSearch]);
 
   const filteredStories = fictionalStories.filter((story) =>
     story.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -97,14 +105,16 @@ const Stories = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <MyInput
-        width={"90%"}
-        style={{ borderWidth: 0 }}
-        placeholder="Search Stories..."
-        value={searchQuery}
-        placeholderColor="white"
-        onChange={(text) => setSearchQuery(text)}
-      />
+      {showSearchBar && (
+        <MyInput
+          width={"90%"}
+          style={{ borderWidth: 0 }}
+          placeholder="Search Audiobooks..."
+          value={searchQuery}
+          placeholderColor="white"
+          onChange={(text) => setSearchQuery(text)}
+        />
+      )}
       <GapView length={10} />
       <FlatList
         data={filteredStories}
