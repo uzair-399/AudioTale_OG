@@ -4,11 +4,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { GapView, MyButton, MyInput, MyText } from "../../components";
 import { LightTheme } from "../../theme";
-import {
-  getAuth,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../../firebaseconfig";
 
 const ForgotPassword = ({ navigation }) => {
