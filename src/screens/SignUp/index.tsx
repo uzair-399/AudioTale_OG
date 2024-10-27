@@ -4,6 +4,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { GapView, MyButton, MyInput, MyText } from "../../components";
 import { LightTheme } from "../../theme";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebaseconfig";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -13,16 +15,25 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
+const handleSignUp = (values, { resetForm }) => {
+  createUserWithEmailAndPassword(auth, values.email, values.password)
+    .then((userCredentials) => {
+      const user = userCredentials.user;
+      console.log("User signed up successfully: ", "email: ", user.email);
+      resetForm(); // Reset form values
+    })
+    .catch((error) => {
+      const message = error.message;
+      console.error(message);
+    });
+};
+
 const SignIn = ({ navigation }) => {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log(values);
-        navigation.navigate("Home");
-        // Add your form submission logic here (e.g., API calls)
-      }}
+      onSubmit={(values, actions) => handleSignUp(values, actions)} // Pass actions to handleSignUp
     >
       {({
         handleChange,
@@ -68,7 +79,6 @@ const SignIn = ({ navigation }) => {
               value={values.password}
               password
             />
-
             <GapView length={30} />
             <View style={{ width: "50%", alignItems: "center" }}>
               <MyButton onPress={handleSubmit} label="Sign Up" />

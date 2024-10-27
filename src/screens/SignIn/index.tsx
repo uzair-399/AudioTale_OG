@@ -4,6 +4,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { GapView, MyButton, MyInput, MyText } from "../../components";
 import { LightTheme } from "../../theme";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebaseconfig";
 
 // Validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -14,15 +16,24 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignIn = ({ navigation }) => {
+  const handleSignIn = (values, { resetForm }) => {
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("User signed in successfully: ", "email: ", user.email);
+        navigation.replace("BottomTab"); // Navigate to Home screen
+        resetForm(); // Reset form values
+      })
+      .catch((error) => {
+        const message = error.message;
+        console.error(message);
+      });
+  };
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log(values);
-        navigation.replace("BottomTab");
-        // Add your form submission logic here (e.g., API calls)
-      }}
+      onSubmit={(values, actions) => handleSignIn(values, actions)} // Pass actions to handleSignUp
     >
       {({
         handleChange,
@@ -68,27 +79,31 @@ const SignIn = ({ navigation }) => {
             />
 
             <GapView length={20} />
-            <MyText
-              size={20}
-              weight="900"
-              style={{ color: LightTheme.colors.primary }}
-            >
-              Forgot Password ?
-            </MyText>
+            <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+              <MyText
+                size={20}
+                weight="900"
+                style={{ color: LightTheme.colors.primary }}
+              >
+                Forgot Password ?
+              </MyText>
+            </Pressable>
             <GapView length={30} />
             <View style={{ width: "50%", alignItems: "center" }}>
               <MyButton onPress={handleSubmit} label="SignIn" />
             </View>
             <GapView length={30} />
-            <MyText textColor={LightTheme.colors.text}>
-              Don't have an account?{" "}
-              <Pressable onPress={() => navigation.navigate("SignUp")}>
-                <MyText weight="800" textColor={LightTheme.colors.primary}>
-                  Sign Up{" "}
-                </MyText>
-              </Pressable>
-              Here
-            </MyText>
+            <View style={{ alignItems: "center" }}>
+              <MyText textColor={LightTheme.colors.text}>
+                Don't have an account?{" "}
+                <Pressable onPress={() => navigation.navigate("SignUp")}>
+                  <MyText weight="800" textColor={LightTheme.colors.primary}>
+                    Sign Up{" "}
+                  </MyText>
+                </Pressable>
+                Here
+              </MyText>
+            </View>
           </View>
         </View>
       )}
@@ -101,7 +116,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: LightTheme.colors.background,
     alignItems: "center",
+    justifyContent: "center", // Center contents vertically
   },
+
   imgContainer: {
     margin: 20,
     // flex: 1,

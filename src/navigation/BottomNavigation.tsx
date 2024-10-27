@@ -81,12 +81,19 @@ const BottomNavigation = () => {
 
         headerRight: () => (
           <View style={{ flexDirection: "row" }}>
-            <Pressable style={{ marginRight: 15 }}>
+            <Pressable
+              style={{ marginRight: 15 }}
+              onPress={() =>
+                navigation.setParams({
+                  toggleSearch: true,
+                })
+              }
+            >
               <Search height={25} width={25} />
             </Pressable>
-            <Pressable style={{ marginRight: 15 }}>
+            {/* <Pressable style={{ marginRight: 15 }}>
               <Filter width={25} height={25} />
-            </Pressable>
+            </Pressable> */}
           </View>
         ),
         headerTitleAlign: "center", // Center the header title
